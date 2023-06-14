@@ -10,6 +10,10 @@ const PostSchema = new mongoose.Schema({
         required: true
     },
     text: {
+        type: String,
+        required: true
+    },
+    shortUrl: {
         type: String
     },
     shortUrlId: {
