@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../utils/axiosInstance";
-import { backendUrl } from "../utils/config";
+import {  clientUrl } from "../utils/config";
 import Posts from "../components/Posts";
 import { ToastContainer, toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
 
-    const [email, setEmail] = useState("");
     const [longUrl, setLongUrl] = useState('');
     const [tag, setTag] = useState('');
     const [loading, setLoading] = useState(false);
-    const [shortUrl, setShortUrl] = useState('');   
+    const [shortLink, setShortUrl] = useState('');
     const [isEditable, setIsEditable] = useState(true);
     const [error, setError] = useState("");
     const [shortId, setId] = useState("");
@@ -25,38 +23,35 @@ const Dashboard = () => {
             const response = await axiosInstance.post('/post/create-post', {
                 longUrl: longUrl,
                 text: tag,
+                clientUrl : clientUrl
             });
 
-            const { shortUrlId } = response.data;
+            const { shortUrlId,shortUrl } = response.data;
 
             setId(shortUrlId);
-            setShortUrl(`${backendUrl}/${shortUrlId}`);
+            setShortUrl(shortUrl);
             setIsEditable(false);
             setLoading(false);
-
-            console.log(response.data); // Handle the response as needed
         } catch (error) {
             if (error.status === 400) {
                 setError("Invalid URL");
             }
             else {
-                console.log(error); 
+                console.log(error);
             }
             setLoading(false);
         }
     };
 
-    const handleVisitUrl = async () => {
-        const response = await axiosInstance.post(`/post/update-visit/${shortId}`);
-        console.log(response)
-        window.open(shortUrl);
+    const handleVisitUrl = () => {
+        window.location.href=shortLink;
     };
 
     const handleCopyToClipboard = () => {
-        navigator.clipboard.writeText(shortUrl);
+        navigator.clipboard.writeText(shortLink);
         toast.success("Short url copied!", {
             position: toast.POSITION.TOP_CENTER
-          });
+        });
     };
 
     const handleGoBack = () => {
@@ -69,9 +64,9 @@ const Dashboard = () => {
 
     return (
         <>
-        <Navbar />
+            <Navbar />
             <div className="flex justify-center items-center mt-6 mb-12 " >
-                <div className="bg-white rounded-lg shadow-lg border px-4 py-8 sm:px-8 w-[95vw] sm:w-[85vw] lg:w-[65vw]">
+                <div className="bg-white rounded-lg shadow-md border px-3 py-8 sm:px-8 w-[95vw] sm:w-[85vw] lg:w-[65vw]">
                     {loading ? (
                         <div className="text-center mb-4">GENERATING SHORT URL...</div>
                     ) : (
@@ -85,7 +80,7 @@ const Dashboard = () => {
                                         <input
                                             id="longUrl"
                                             type="text"
-                                            className="rounded-lg border p-2 w-full focus:border-blue-500 focus:outline-none"
+                                            className="text-gray-600 rounded-lg border p-2 w-full focus:border-blue-500 focus:outline-none"
                                             value={longUrl}
                                             readOnly={!isEditable}
                                         />
@@ -98,8 +93,8 @@ const Dashboard = () => {
                                             <input
                                                 id="shortUrl"
                                                 type="text"
-                                                className="rounded-lg border p-2 w-full focus:border-blue-500 focus:outline-none" 
-                                                value={shortUrl}
+                                                className="text-gray-600 rounded-lg border p-2 w-full focus:border-blue-500 focus:outline-none"
+                                                value={shortLink}
                                                 readOnly
                                             />
                                             <button
@@ -111,21 +106,21 @@ const Dashboard = () => {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8"> 
-                                    <button
-                                        className="border border-blue-500 bg-blue-500 text-white py-2 px-4 hover:bg-blue-700 rounded-md w-full mt-4"
-                                        type="button"
-                                        onClick={handleVisitUrl}
-                                    >
-                                        Visit URL
-                                    </button>
-                                    <button
-                                        className="border border-blue-500 text-blue-500 py-2 px-4 rounded-md  hover:bg-indigo-50 w-full mt-4"
-                                        type="button"
-                                        onClick={handleGoBack}
-                                    >
-                                        Generate New URL
-                                    </button>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+                                        <button
+                                            className="border border-blue-500 bg-blue-500 text-white py-2 px-4 hover:bg-blue-700 rounded-md w-full mt-4"
+                                            type="button"
+                                            onClick={handleVisitUrl}
+                                        >
+                                            Visit URL
+                                        </button>
+                                        <button
+                                            className="border border-blue-500 text-blue-500 py-2 px-4 rounded-md  hover:bg-indigo-50 w-full mt-4"
+                                            type="button"
+                                            onClick={handleGoBack}
+                                        >
+                                            Generate New URL
+                                        </button>
                                     </div>
                                 </>
                             ) : (
@@ -137,7 +132,7 @@ const Dashboard = () => {
                                         <input
                                             id="urlInput"
                                             type="text"
-                                            className={`rounded-lg border focus:border-blue-500 focus:outline-none p-[10px] w-full ${error ? 'border-red-500' : ''}`}
+                                            className={`text-gray-600 rounded-lg border focus:border-blue-500 focus:outline-none p-[10px] w-full ${error ? 'border-red-500' : ''}`}
                                             placeholder="https://www.example.com"
                                             value={longUrl}
                                             onChange={(e) => {
@@ -156,7 +151,7 @@ const Dashboard = () => {
                                         <input
                                             id="tagInput"
                                             type="text"
-                                            className="rounded-lg border p-[10px] w-full focus:border-blue-500 focus:outline-none"
+                                            className="text-gray-600 rounded-lg border p-[10px] w-full focus:border-blue-500 focus:outline-none"
                                             placeholder="educational"
                                             value={tag}
                                             onChange={(e) => setTag(e.target.value)}
@@ -174,10 +169,10 @@ const Dashboard = () => {
                         </>
                     )}
                 </div>
-               
+
             </div>
-            <Posts shortUrl={shortUrl} email={email} shortId={shortId}/>
-            <ToastContainer autoClose={1000}/>
+            <Posts shortId={shortId} />
+            <ToastContainer autoClose={1000} />
         </>);
 };
 

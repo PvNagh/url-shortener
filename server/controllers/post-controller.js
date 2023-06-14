@@ -3,20 +3,23 @@ import { nanoid } from "nanoid"
 import validUrl from 'valid-url'
 
 export const createPost = async (req, res) => {
-    const { longUrl, text } = req.body;
+    const { longUrl, text,clientUrl} = req.body;
     const userId = req.user.id;
-
+ 
     try {
         if (!validUrl.isWebUri(longUrl)) {
             return res.status(400).json({ error: "Invalid URL" });
         }
-        const existingPost = await Post.findOne({ longUrl });
-
+        let existingPost = await Post.findOne({
+          $and: [{ longUrl: longUrl }, { userId: userId }],
+        });
+    
         if (existingPost) {
-            return res.status(200).json(existingPost);
+          return res.status(200).json(existingPost);
         }
+
         const shortUrlId = nanoid(9);
-        const shortUrl = `${process.env.BACKEND}/${shortUrlId}`;
+        const shortUrl = `${clientUrl}/${shortUrlId}`;
         const newPost = new Post({
             longUrl: longUrl,
             shortUrl: shortUrl,
@@ -36,6 +39,7 @@ export const createPost = async (req, res) => {
 
 export const getUserPosts = async (req, res) => {
     try {
+        console.log(req.user)
         const userId = req.user.id;
         const posts = await Post.find({ userId: userId });
 
@@ -45,46 +49,30 @@ export const getUserPosts = async (req, res) => {
     }
 };
 
-
 export const redirectToLongUrl = async (req, res) => {
     const { shortUrlId } = req.params;
+  
     try {
-        const post = await Post.findOne({ shortUrlId });
-
-        if (!post) {
-            return res.status(404).json({ error: "Short URL not found" });
-        }
-        post.visitCount += 1;
-        await post.save();
-        res.redirect(301, post.longUrl);
+      const post = await Post.findOne({ shortUrlId });
+  
+      if (!post) {
+        return res.status(404).json({ error: "Short URL not found" });
+      }
+  
+      post.visitCount += 1;
+      await post.save();
+  console.log(post.longUrl)
+      return res.status(200).json(post.longUrl);
     } catch (error) {
-        res.status(500).json(error);
+      res.status(500).json(error);
     }
-};
-
-
-export const updateVisitCounter = async (req, res) => {
-    const { shortUrlId } = req.params;
-
-    try {
-        const post = await Post.findOne({ shortUrlId });
-
-        if (!post) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
-        post.visitCount += 1;
-        await post.save();
-        res.status(200).json({ message: 'Visit counter updated' });
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-};
-
+  };
+  
 
 export const searchPosts = async (req, res) => {
     try {
       const { search } = req.query;
-      const userId  = req.user.id; // Assuming you have the user's ID available
+      const userId  = req.user.id; 
       const query = {
         $and: [
           {
@@ -94,7 +82,7 @@ export const searchPosts = async (req, res) => {
               { shortUrl: { $regex: search, $options: "i" } },
             ],
           },
-          { userId: userId }, // Only include posts belonging to the user
+          { userId: userId }, 
         ],
       };
       const posts = await Post.find(query);

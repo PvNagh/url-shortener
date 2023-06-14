@@ -57,7 +57,7 @@ export const refresh = async (req, res) => {
             if (err) {
                 return res.status(403).json({ message: "Invalid refresh token" });
             }
-
+            console.log(decoded);
             const user = await User.findById(decoded.id);
 
             if (!user) {
@@ -65,10 +65,11 @@ export const refresh = async (req, res) => {
             }
 
             const accessToken = jwt.sign(
-                { userId: user._id },
+                { id: user._id },
                 process.env.ACCESS_KEY,
                 { expiresIn: "30m" }
             );
+            console.log(req.user)
 
             return res.status(200).json({ accessToken, refreshToken });
         });

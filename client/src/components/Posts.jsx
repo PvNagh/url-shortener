@@ -3,7 +3,7 @@ import { axiosInstance } from "../utils/axiosInstance";
 import PostCard from "./PostCard";
 import { Link } from "lucide-react";
 
-const Posts = ({ shortUrl, email, shortId }) => {
+const Posts = ({shortId }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [allPosts, setAllPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
@@ -20,7 +20,6 @@ const Posts = ({ shortUrl, email, shortId }) => {
                 console.error(error);
             }
         };
-
         fetchAllPosts();
     }, [shortId]);
 
@@ -62,14 +61,14 @@ const Posts = ({ shortUrl, email, shortId }) => {
         <div className="w-[95vw] sm:w-[85vw] lg:w-[65vw] mx-auto mb-9">
             <div className="flex justify-between w-full flex-col sm:flex-row gap-y-2">
             <div className="flex items-center text-blue-500 gap-x-2">
-            <Link size={24}/><span className="text-2xl font-semibold">My URLs</span>
+            <Link size={28}/><span className="text-2xl font-semibold mb-1 sm:mb-0">My URLs</span>
             </div>
              
-                <div className="flex items-center">
+                <div className="flex items-center justify-between gap-y-2 flex-wrap">
                     <input
                         type="text"
-                        className="rounded-lg border  border-gray-300 p-2 w-64 focus:outline-none focus:border-blue-500"
-                        placeholder="Search posts"
+                        className="text-gray-600 flex-grow rounded-lg border  border-gray-300 p-2 sm:w-64 focus:outline-none focus:border-blue-500"
+                        placeholder="Search posts..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -85,7 +84,7 @@ const Posts = ({ shortUrl, email, shortId }) => {
             </div>
             <hr className="border-gray-300 my-4" />
             <div className="grid md:grid-cols-2  gap-4 grid-cols-1">
-                {filteredPosts.length > 0 || searchTerm.trim() === '' ? (
+                {filteredPosts.length > 0 ? (
                     filteredPosts.map((post) => (
                         <PostCard key={post._id} post={post} />
                     ))

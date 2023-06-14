@@ -1,6 +1,6 @@
 import express from 'express';
 import { login, refresh, signup } from "../controllers/auth-controller.js";
-import { createPost, getUserPosts, redirectToLongUrl, searchPosts, updateVisitCounter } from "../controllers/post-controller.js";
+import { createPost, getUserPosts, redirectToLongUrl, searchPosts} from "../controllers/post-controller.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -11,7 +11,6 @@ router.get("/auth/refresh", refresh);
 router.post("/post/create-post", verifyToken, createPost);
 router.get("/post/all", verifyToken, getUserPosts);
 router.get("/post/search", verifyToken, searchPosts);
-router.post("/post/update-visit/:shortUrlId", verifyToken, updateVisitCounter);
-router.get("/:shortUrlId", redirectToLongUrl);//no verification needed when going to this url
+router.get("/:shortUrlId", redirectToLongUrl); //no verification needed when going to this url
 
 export default router;

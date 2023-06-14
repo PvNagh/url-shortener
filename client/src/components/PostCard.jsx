@@ -1,14 +1,9 @@
 import { toast } from 'react-toastify';
 import { MousePointerClick, ClipboardCopy, ExternalLink } from 'lucide-react';
 
-
 const PostCard = ({ post }) => {
   const { createdAt, longUrl, shortUrl, text, visitCount } = post;
-
-  // Convert createdAt to real time
-  const formattedTime = new Date(createdAt).toLocaleString();
-
-  // Copy the short URL to the clipboard
+ 
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(shortUrl);
     toast.success("Short url copied!", {
@@ -16,22 +11,19 @@ const PostCard = ({ post }) => {
     });
   };
 
-  // Open the short URL in a new tab
-  const handleVisitUrl = () => {
-    window.open(shortUrl, '_blank');
 
+  const handleVisitUrl = () => { 
+    window.location.href=shortUrl;
   };
 
   return (
     <div className="bg-white rounded-lg  shadow-md border p-4 flex flex-col justify-evenly">
-      <h3 className="text-blue-700 text-md font-semibold ">{shortUrl}</h3>
-      <p className="text-black mb-2 font-small truncate text-xs">
+      <h3 className="text-blue-600 text-[17px] font-semibold mb-[2px]">{shortUrl}</h3>
+      <p className="text-gray-600 mb-2 font-normal truncate text-[13px]">
         {longUrl}
       </p>
-      <p className="text-gray-700 mb-2 font-light text-xs">{formattedTime}</p>
-
       <div className="flex mb-3 gap-x-2">
-        <span className="bg-gray-200 rounded-md px-2 py-1 text-sm text-gray-700">
+        <span className="bg-gray-100 rounded-md px-2 py-1 text-sm text-gray-700 overflow-auto">
           {text}
         </span>
       </div>
@@ -45,14 +37,13 @@ const PostCard = ({ post }) => {
             className="border border-blue-500 text-blue-500 p-2 rounded-md mr-2 hover:bg-indigo-100"
             onClick={handleCopyUrl}
           >
-            <ClipboardCopy size={18} />
+            <ClipboardCopy size={19} />
           </button>
-
           <button
             className="border border-blue-500 text-blue-500 p-2 rounded-md  hover:bg-indigo-100"
-            onClick={handleVisitUrl}
+           onClick={handleVisitUrl}
           >
-            <ExternalLink size={18} />
+            <ExternalLink size={19} />
           </button>
         </div>
       </div>
