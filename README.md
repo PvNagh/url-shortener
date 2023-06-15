@@ -45,4 +45,4 @@ Start the development server:
 
 ## Configuration
 
-Open the config.js file and set the backendUrl variable to the URL of your backend server.
+Open the config.js file and set the backendUrl variable and clientUrl to the URL of your backend server and frontend respectively.
