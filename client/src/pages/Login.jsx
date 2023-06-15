@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../utils/axiosInstance";
-import login2 from "../assets/login-2.png";
-import signup from "../assets/sign.png";
+import login2 from "../assets/login-1.png";
+import signup from "../assets/signup.png";
 import { ToastContainer, toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 const Login = () => {
@@ -13,6 +13,12 @@ const Login = () => {
     const [showLogin, setShowLogin] = useState(true);
     const [showSpinner, setShowSpinner] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem("user"))?.user?.accessToken) {
+          navigate("/home", { replace: true });
+        }
+      }, []);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -26,23 +32,23 @@ const Login = () => {
                 setShowLogin(true);
                 toast.success("Successfully signed up!", {
                     position: toast.POSITION.TOP_CENTER
-                }); 
+                });
             }
-            setShowSpinner(false);     
+            setShowSpinner(false);
         } catch (error) {
 
             if (error.status === 400) {
-                setShowSpinner(false);     
+                setShowSpinner(false);
                 toast.error(error.data.msg, {
                     position: toast.POSITION.TOP_CENTER
-                }); 
+                });
 
             } else {
-                setShowSpinner(false);     
+                setShowSpinner(false);
                 console.error(error);
                 toast.error('Something went wrong', {
                     position: toast.POSITION.TOP_CENTER
-                }); 
+                });
             }
         }
     };
@@ -66,17 +72,17 @@ const Login = () => {
 
 
         } catch (error) {
-            if (error.status === 400) {     
-                setShowSpinner(false);       
+            if (error.status === 400) {
+                setShowSpinner(false);
                 toast.error(error.data.msg, {
                     position: toast.POSITION.TOP_CENTER
-                });               
+                });
             } else {
-                setShowSpinner(false);     
-                console.error(error);          
+                setShowSpinner(false);
+                console.error(error);
                 toast.error("Something went wrong", {
                     position: toast.POSITION.TOP_CENTER
-                });                        
+                });
             }
         }
     };
@@ -85,7 +91,7 @@ const Login = () => {
         <>
             {showSpinner ? <Spinner /> : (
                 <>
-                    <div className="w-screen flex justify-center h-screen">
+                    <div className="w-screen flex justify-center h-screen bg-gray-100">
                         <div className="flex h-full flex-col justify-center w-[92%] sm:w-[38%]">
                             <div className="flex flex-col items-center justify-center gap-y-5">
                                 <div className="flex object-fit justify-center">
@@ -122,7 +128,7 @@ const Login = () => {
                                                     required
                                                 />
                                             </div>
-                                            <button className="w-full rounded-md shadow-sm text-white text-lg bg-blue-500 hover:bg-blue-700 p-[10px] mb-5" type="submit">
+                                            <button className="w-full rounded-md shadow-sm transition-colors duration-150 text-white text-lg bg-blue-600 hover:bg-blue-700 p-[10px] mb-5" type="submit">
                                                 Login
                                             </button>
                                             <p className="text-center text-gray-500">
@@ -160,7 +166,7 @@ const Login = () => {
                                                 />
 
                                             </div>
-                                            <button className="w-full rounded-md shadow-sm text-white text-lg bg-blue-500 hover:bg-blue-700 p-[10px] mb-5" type="submit">
+                                            <button className="w-full rounded-md transition-colors duration-150 shadow-sm text-white text-lg bg-blue-600 hover:bg-blue-700 p-[10px] mb-5" type="submit">
                                                 Sign Up
                                             </button>
                                             <p className="text-center text-gray-500 ">

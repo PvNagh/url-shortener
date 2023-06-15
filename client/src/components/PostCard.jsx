@@ -18,7 +18,7 @@ const PostCard = ({ post }) => {
 
   return (
     <div className="bg-white rounded-lg  shadow-md border p-4 flex flex-col justify-evenly">
-      <h3 className="text-blue-600 text-[17px] font-semibold mb-[2px]">{shortUrl}</h3>
+      <h3 className="text-blue-600 text-[17px] font-semibold mb-[2px] overflow-auto">{shortUrl}</h3>
       <p className="text-gray-600 mb-2 font-normal truncate text-[13px]">
         {longUrl}
       </p>

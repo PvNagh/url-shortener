@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import Spinner from "./components/Spinner";
 import "./index.css";
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from "./pages/ErrorPage";
 
 
 const Login = lazy(() => import("./pages/Login"));
@@ -17,7 +18,7 @@ const PrivateRoute = ({ ...props }) => {
 
   return isAuthenticated && token ?
     <Outlet />
-    : <Navigate to="/login" state={{ from: location.pathname }} replace />
+    : <Navigate to="/" state={{ from: location.pathname }} replace />
 };
 
 function App() {
@@ -26,13 +27,13 @@ function App() {
     <>
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           {/* All protected routes in this Route component */}
           <Route path='/home' element={<PrivateRoute />}>
             <Route path='/home' element={<Dashboard />} replace />
           </Route>
           <Route path="/:shortId" element={<Redirect />} />
-          <Route path='*' element={<Dashboard />} replace />
+          <Route path='*' element={<ErrorPage />} replace />
         </Routes>
       </Suspense>
     </>

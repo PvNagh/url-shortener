@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
         .catch((refreshTokenAPIError) => {
           console.log(refreshTokenAPIError);
           localStorage.removeItem("user");
-          window.location.replace("/login");
+          window.location.replace("/");
           return Promise.reject(refreshTokenAPIError);
         });
     }

@@ -63,7 +63,7 @@ const Dashboard = () => {
     };
 
     return (
-        <>
+        <div className="bg-gray-100 h-full">
             <Navbar />
             <div className="flex justify-center items-center mt-6 mb-12 " >
                 <div className="bg-white rounded-lg shadow-md border px-3 py-8 sm:px-8 w-[95vw] sm:w-[85vw] lg:w-[65vw]">
@@ -173,7 +173,7 @@ const Dashboard = () => {
             </div>
             <Posts shortId={shortId} />
             <ToastContainer autoClose={1000} />
-        </>);
+        </div>);
 };
 
 export default Dashboard;

@@ -8,7 +8,7 @@
 /* Style the scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
-    height: 6px;
+    height: 4px;
   }
   
   /* Style the scrollbar thumb */

@@ -58,7 +58,7 @@ const Posts = ({shortId }) => {
     };
 
     return (
-        <div className="w-[95vw] sm:w-[85vw] lg:w-[65vw] mx-auto mb-9">
+        <div className="w-[95vw] sm:w-[85vw] lg:w-[65vw] mx-auto pb-9">
             <div className="flex justify-between w-full flex-col sm:flex-row gap-y-2">
             <div className="flex items-center text-blue-500 gap-x-2">
             <Link size={28}/><span className="text-2xl font-semibold mb-1 sm:mb-0">My URLs</span>

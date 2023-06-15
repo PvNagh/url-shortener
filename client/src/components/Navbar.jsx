@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
-    const handleLogout = () =>{
+    const handleLogout = () => {
         localStorage.removeItem("user");
-        navigate("/login");
+        navigate("/", { replace: true });
     }
+    
     return (
-        <nav className="sticky top-0 z-20 border-b border-gray-200 bg-white">
+        <nav className="sticky top-0 z-20 border-b border-gray-200 bg-gray-50 shadow-sm">
             <div className="w-[99vw] sm:w-[90vw] lg:w-[75vw] mx-auto flex flex-wrap items-center justify-between py-4 px-2">
                 <div className="flex items-center">
                     <Link to="/home" className="text-blue-500 font-semibold text-2xl flex items-center">
