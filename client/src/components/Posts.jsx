@@ -3,7 +3,7 @@ import { axiosInstance } from "../utils/axiosInstance";
 import PostCard from "./PostCard";
 import { Link } from "lucide-react";
 
-const Posts = ({shortId }) => {
+const Posts = ({ shortId }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [allPosts, setAllPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
@@ -38,7 +38,7 @@ const Posts = ({shortId }) => {
             if (searchTerm.trim() !== '') {
                 fetchFilteredPosts();
             } else {
-                setFilteredPosts(allPosts); 
+                setFilteredPosts(allPosts);
             }
             setButtonClicked(false);
         }
@@ -58,12 +58,12 @@ const Posts = ({shortId }) => {
     };
 
     return (
-        <div className="w-[95vw] sm:w-[85vw] lg:w-[65vw] mx-auto pb-9">
-            <div className="flex justify-between w-full flex-col sm:flex-row gap-y-2">
-            <div className="flex items-center text-blue-500 gap-x-2">
-            <Link size={28}/><span className="text-2xl font-semibold mb-1 sm:mb-0">My URLs</span>
-            </div>
-             
+        <div className="w-[95vw] sm:w-[85vw] lg:w-[65vw] mx-auto bg-gray-100 pb-8 min-h-screen">
+            <div className="flex justify-between w-full flex-col sm:flex-row gap-y-2 ">
+                <div className="flex items-center text-blue-500 gap-x-2">
+                    <Link size={28} /><span className="text-2xl font-semibold mb-1 sm:mb-0">My URLs</span>
+                </div>
+
                 <div className="flex items-center justify-between gap-y-2 flex-wrap">
                     <input
                         type="text"
@@ -80,10 +80,11 @@ const Posts = ({shortId }) => {
                         Search
                     </button>
                 </div>
-                
+
             </div>
             <hr className="border-gray-300 my-4" />
-            <div className="grid md:grid-cols-2  gap-4 grid-cols-1">
+
+            <div className="grid md:grid-cols-2  gap-4 grid-cols-1 flex-grow">
                 {filteredPosts.length > 0 ? (
                     filteredPosts.map((post) => (
                         <PostCard key={post._id} post={post} />
@@ -92,6 +93,7 @@ const Posts = ({shortId }) => {
                     <p>No posts found</p>
                 )}
             </div>
+
         </div>
     );
 };
