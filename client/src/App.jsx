@@ -32,7 +32,7 @@ function App() {
             <Route path='/home' element={<Dashboard />} replace />
           </Route>
           <Route path="/:shortId" element={<Redirect />} />
-          <Route path='/*' element={<Dashboard />} replace />
+          <Route path='*' element={<Dashboard />} replace />
         </Routes>
       </Suspense>
     </>
