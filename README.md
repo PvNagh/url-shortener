@@ -110,29 +110,6 @@ To use the URL Shortener application, follow these steps:
 8. Use the search functionality to filter and find specific URLs based on tags, long URLs, or short URLs.
 9. Log out of the application when you're done.
 
-## Features
-
-The application provides the following features:
-
-1. User Authentication: Secure access to the application using access and refresh tokens. When users sign up or log in, they receive an access token that allows them to make authenticated requests to the server. The access token is also refreshed periodically using a refresh token to maintain user sessions.
-
-2. URL Shortening: Generate short URLs from long URLs provided by the user and add tags to categorize the URLs for better organization. 
-
-3. Display Shortened URLs: View the shortened URLs and their corresponding long URLs on the home page. The list includes tags and the number of clicks each short URL has received. The URLs can be copied and shared publicly.
-
-
-4. Analytics: Track the number of clicks for each short URL to gain insights into its usage.
-
-5. Search Functionality: Search for specific URLs based on tags, long URLs, or short URLs using the search feature. Enter keywords or parts of the URL to filter and find relevant results.
-
-6. Responsive Design: The application is fully responsive, ensuring a seamless user experience across different devices and screen sizes.
-
-7. Error Handling: Proper error handling is implemented to handle cases such as invalid login and signup attempts, duplicate signups, and invalid URLs. Users are notified of errors and provided with relevant feedback.
-
-8. 404 Error Page: If a user accesses a wrong page or URL within the application, a dedicated 404 error page is displayed, indicating that the requested page was not found.
-
-9. Log Out: Users can log out of the application to ensure the security of their account and data. The access and refresh tokens are invalidated upon logout, preventing unauthorized access to the user's account.
-
 ## Technologies Used
 
 - Frontend:
